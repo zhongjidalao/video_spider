@@ -21,7 +21,9 @@ if form == 'video':
 elif form == 'image':
     url_list = re.findall('"display_url":"(.*?)"', response.text, re.S)
 
-    for url in url_list:
+    for index, url in enumerate(url_list):
+        if index == 0:
+            continue
         print(url)
         temp = 0
         temp += 1
