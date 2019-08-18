@@ -11,6 +11,8 @@ name = name.replace(' ', '')
 name = name.replace('\n', '')
 name = name.replace('"', '')
 
+sum = 0
+
 print(name)
 
 if form == 'video':
@@ -21,13 +23,23 @@ if form == 'video':
 elif form == 'image':
     url_list = re.findall('"display_url":"(.*?)"', response.text, re.S)
 
-    for index, url in enumerate(url_list):
-        if index == 0:
-            continue
+    for sum, url in enumerate(url_list):
+        sum += 1
+    if sum == 1:
         print(url)
-        temp = 0
-        temp += 1
-        name = name + str(temp)
         re = requests.get(url)
         with open('%s.jpg' % name, mode='wb') as f:
             f.write(re.content)
+    else:
+        for index, url in enumerate(url_list):
+            if index == 0:
+                continue
+            print(url)
+
+            temp = 0
+            temp += 1
+            name = name + str(temp)
+
+            re = requests.get(url)
+            with open('%s.jpg' % name, mode='wb') as f:
+                f.write(re.content)
