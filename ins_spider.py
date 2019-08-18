@@ -14,12 +14,18 @@ name = name.replace('"', '')
 print(name)
 
 if form == 'video':
-    url = re.findall(r'<meta property="og:video" content="(.*?)" />', response.text, re.S)[0]
+    url = re.findall('"video_url":"(.*?)"', response.text, re.S)[0]
     re = requests.get(url)
     with open('%s.mp4' % name, mode='wb') as f:
         f.write(re.content)
 elif form == 'image':
-    url = re.findall(r'<meta property="og:image" content="(.*?)" />', response.text, re.S)[0]
-    re = requests.get(url)
-    with open('%s.jpg' % name, mode='wb') as f:
-        f.write(re.content)
+    url_list = re.findall('"display_url":"(.*?)"', response.text, re.S)
+
+    for url in url_list:
+        print(url)
+        temp = 0
+        temp += 1
+        name = name + str(temp)
+        re = requests.get(url)
+        with open('%s.jpg' % name, mode='wb') as f:
+            f.write(re.content)
