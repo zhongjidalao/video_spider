@@ -14,7 +14,7 @@ name = name.replace('"', '')
 print(name)
 
 if form == 'video':
-    url = re.findall('"video_url":"(.*?)"', response.text, re.S)[0]
+    url = re.findall('<meta property="og:video" content="(.*?)" />', response.text, re.S)[0]
     re = requests.get(url)
     with open('%s.mp4' % name, mode='wb') as f:
         f.write(re.content)
